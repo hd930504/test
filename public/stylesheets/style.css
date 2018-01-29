@@ -1,0 +1,37 @@
+body {
+  padding: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.header-demo{
+  height: 60px;
+  border-bottom: none;
+}
+
+.layui-header .layui-nav{
+  position: absolute;
+  right: 0;
+  padding: 0;
+}
+
+.component {
+  position: absolute;
+  width: 200px;
+  /* left: 120px; */
+  top: 16px;
+}
+
+.header-demo .component {
+  right: 300px;
+}
+
+.component .layui-input {
+  height: 30px;
+  padding-left: 12px;
+  background-color: #424652;
+  background-color: rgba(255,255,255,.05);
+  border: none 0;
+  color: #fff;
+  font-size: 12px;
+}
+
