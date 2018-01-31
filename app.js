@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var flash = require('connect-flash')
+var MongoStore = require('connect-mongo')(session); 
 var mongoose = require('mongoose');
 
 var index = require('./routes/index');
@@ -23,6 +26,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+
+app.use(session({
+      secret : 'webapp',
+      cookie : {maxAge : 3600},
+      store : new MongoStore({
+        // host: '127.0.0.1',
+        // port: '27017',
+        db : 'webapp',
+        url:'mongodb://localhost:27017/webapp'
+      })
+  }));
+
+app.use(function(req,res,next){
+  res.locals.user = req.session.user;
+  // res.locals.post = req.locals.post;
+  var error = req.flash('error');
+  res.locals.error = error.length ? error:null;
+  var success = req.flash('success');
+  res.locals.success = success.length ? success:null;
+  next();
+})
 
 mongoose.connect('mongodb://localhost/webapp');
 var db = mongoose.connection;

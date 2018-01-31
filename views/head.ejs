@@ -18,20 +18,25 @@
             </div>
             <ul class="layui-nav">
                 <li class="layui-nav-item">
-                    <a href="">控制台<span class="layui-badge">9</span></a>
+                  <a href="">控制台<span class="layui-badge">9</span></a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">个人中心<span class="layui-badge-dot"></span></a>
+                  <a href="">个人中心<span class="layui-badge-dot"></span></a>
                 </li>
                 <li class="layui-nav-item" lay-unselect="">
-                    <a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
-                    <dl class="layui-nav-child">
+                  <% if(!user) { %>
+                  <a href="javascript:;" id="login">登录</a>
+                  <% }else{ %>
+                  <a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img"><%= user.name %></a>
+                  <dl class="layui-nav-child">
                     <dd><a href="javascript:;">修改信息</a></dd>
                     <dd><a href="javascript:;">安全管理</a></dd>
                     <dd><a href="javascript:;">退了</a></dd>
-                    </dl>
+                  </dl>
+                  <% } %>
                 </li>
             </ul>
         </div>
     </div>
+    
     

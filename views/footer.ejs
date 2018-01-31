@@ -1,3 +1,83 @@
+    <% include login.ejs %>
 </body>
 <script src="/layui/layui.all.js"></script>
+<script>
+    layui.use('layer', function(){
+        var $ = layui.jquery, 
+            layer = layui.layer;
+        
+        $('#login').click(function(){
+            layer.open({
+                type: 1,
+                title:false,
+                skin: 'layui-layer-molv', 
+                area: ['420px', '323px'], 
+                content: $("#loginPop"),
+                cancel:function(){
+                    $('#loginPop .register-pop').hide().siblings('.login-pop').show();
+                }
+            })
+        })
+
+        $('.login').click(function(){
+            var params = {
+                name:$('#name').val(),
+                password:$('#password').val()
+            };
+            $.ajax({
+                type:'post',
+                url:'/login',
+                dataType: 'json',
+                data:params,
+                cache: false,
+                success:function(data){
+                    if(data.error){
+                        layer.msg(data.error)
+                    }
+                    if(data.success){
+                        layer.msg(data.success)
+                        layer.closeAll('page');
+                        window.location.href='/';
+                    }
+                },
+                error:function(jqXHR, textStatus, errorThrown){
+                    console.log('error ' + textStatus + " " + errorThrown);  
+                }
+            })
+        })
+
+        $('#register').click(function(){
+            var params = {
+                name:$('#newName').val(),
+                password:$('#newPassword').val(),
+                rePassword:$('#newRePassword').val()
+            };
+
+            $.ajax({
+                type:'post',
+                url:'/register',
+                dataType: 'json',
+                data:params,
+                cache: false,
+                success:function(data){
+                    if(data.error){
+                        layer.msg(data.error)
+                    }
+                    if(data.success){
+                        layer.msg(data.success)
+                        $('#loginPop .register-pop').hide().siblings('.login-pop').show();
+                    }
+                },
+                error:function(jqXHR, textStatus, errorThrown){
+                    console.log('error ' + textStatus + " " + errorThrown);  
+                }
+            })
+        })
+
+
+        $('.register-link a').click(function(){
+            $(this).parents('.login-pop').hide().siblings('.register-pop').show();
+        })
+    })
+</script>
 </html>
